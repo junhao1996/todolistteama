@@ -5,6 +5,7 @@ from todoDB import tododb
 class todolistteamA(object):
     def __init__(self):
         self.list_todo = []
+        self.db = tododb()
         pass
 
     def delete(self, index):
