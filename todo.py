@@ -24,7 +24,7 @@ class todolistteamA(object):
 
         self.db.add(main_text, text, warn_time)
 
-#
+
 # if __name__ == "__main__":
 #     a =todolistteamA()
 #     a.add1('watch','kandianshikandhai','111')
