@@ -9,23 +9,24 @@ class todolistteamA(object):
         pass
 
     def delete(self, index):
-        pass
+        self.db.delete_todo(index)
 
-    def readOne(self):
-        pass
+    def readOne(self,index):
+        return self.db.findOne(index)
 
     def readAll(self):
-        pass
+        return self.db.findAll()
 
-    def update(self):
-        pass
+    def update(self,str, index):
+        self.db.update(str, index)
 
-    def add1(self, text):
-        tt = tododb()
-        tt.add(text)
+    def add1(self, main_text, text, warn_time):
 
+        self.db.add(main_text, text, warn_time)
 
-if __name__ == "__main__":
-    tt1 = todolistteamA()
-    tt1.add1('aaa')
-    print('add')
+#
+# if __name__ == "__main__":
+#     a =todolistteamA()
+#     a.add1('watch','kandianshikandhai','111')
+#     b = a.readAll()
+#     print(b)
