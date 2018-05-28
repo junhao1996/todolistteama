@@ -26,7 +26,7 @@ class tododb(object):
         conn.commit()
         conn.close()
 
-    def findAll(self):
+    def find_all(self):
         conn = sqlite3.connect('todolist.db')
         cursor = conn.cursor()
         cursor.execute("select * from warn1 order by id desc")
@@ -41,8 +41,23 @@ class tododb(object):
         cursor.close()
         conn.commit()
         conn.close()
+    def find_maxone(self):
+        conn = sqlite3.connect('todolist.db')
+        cursor = conn.cursor()
+        cursor.execute("select * from warn1 order by id desc limit 0,1")
+        print('查找最大id提醒数据：')
+        rs = cursor.fetchall()
 
-    def findOne(self, index):
+        if not rs:
+            print('当前没有提醒记录，请添加')
+        else:
+            print(rs)
+            return([{'id': c[0], 'theme': c[1], 'log': c[2], 'localtime': c[3], 'warntime': c[4]} for c in rs])
+        cursor.close()
+        conn.commit()
+        conn.close()
+
+    def find_one(self, index):
         conn = sqlite3.connect('todolist.db')
         cursor = conn.cursor()
         cursor.execute("select * from warn1 where id=%d" % index)
@@ -102,7 +117,6 @@ class tododb(object):
                 a = tk.Tk()
                 a.mainloop()
                 break
-
         # self.cursor.execute("select * from warn1 where id=%d" % 1)
         cursor.execute("select * from warn1 ")
         r = cursor.fetchall()

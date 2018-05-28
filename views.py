@@ -26,7 +26,8 @@ def login():
 @app.route('/showall/<name>')
 def showall(name=None):
     todo = todolistteamA()
-    result= todo.readAll()
+    result= todo.read_all()
+
 
 
     return render_template('showall.html', list_todo = result)
@@ -40,13 +41,13 @@ def redir():
 
 @app.route('/add/', methods=['POST', 'GET'])
 def add():
-    if request.method == 'POST':
-        a = request.form['content']
-        print(a)
-
-
-    else:
-        print('errot++++++++++++++++++++++++')
+    # if request.method == 'POST':
+    #     a = request.form['content']
+    #     print(a)
+    #
+    #
+    # else:
+    #     print('errot++++++++++++++++++++++++')
 
     error = None
 
@@ -59,10 +60,12 @@ def add():
         print(c)
         todo = todolistteamA()
         todo.add1('dsd', b, c)
-        todo.readAll()
+        # todo.read_all()
+        result = todo.read_maxone()
     print('*'*30)
-    return render_template('add.html')
+    return render_template('add.html',addtodo = result)
 
 
 if __name__ == '__main__':
     app.run(debug=True)
+#     saaaaaaaaaaaaaaaaaaaaaa

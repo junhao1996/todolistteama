@@ -11,11 +11,14 @@ class todolistteamA(object):
     def delete(self, index):
         self.db.delete_todo(index)
 
-    def readOne(self,index):
-        return self.db.findOne(index)
+    def read_one(self, index):
+        return self.db.find_one(index)
 
-    def readAll(self):
-        return self.db.findAll()
+    def read_all(self):
+        return self.db.find_all()
+
+    def read_maxone(self):
+        return self.db.find_maxone()
 
     def update(self,str, index):
         self.db.update(str, index)
@@ -25,8 +28,10 @@ class todolistteamA(object):
         self.db.add(main_text, text, warn_time)
 
 
-# if __name__ == "__main__":
-#     a =todolistteamA()
+if __name__ == "__main__":
+
+    a =todolistteamA()
+    a.read_maxone()
 #     a.add1('watch','kandianshikandhai','111')
 #     b = a.readAll()
 #     print(b)
