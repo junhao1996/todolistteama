@@ -6,79 +6,91 @@ from tkinter import *
 
 class tododb(object):
     def __init__(self):
-        self.conn = sqlite3.connect('todolist.db')
-        self.cursor = self.conn.cursor()
+        conn = sqlite3.connect('todolist.db')
+        cursor = conn.cursor()
         # self.cursor.execute('drop table if exists warn1')
         # self.cursor.execute('create table user (id INTEGER primary key not null, username varchar(16),password varchar(16))')
         # self.cursor.execute('create table warn (id INTEGER primary key not null, log varchar(200))')
         # self.cursor.execute("create table warn1( id integer primary key, theme varchar(100),log varchar(200), date timestamp not null default (datetime('now','localtime')),warndate varchar(200))")
 
     def add(self, main_text, text, warn_time):
-        self.cursor.execute("select count(1) from warn")
-        rs = self.cursor.fetchall()
+        conn = sqlite3.connect('todolist.db')
+        cursor = conn.cursor()
+        cursor.execute("select count(1) from warn")
+        rs = cursor.fetchall()
         res_index = rs[0][0]
-        self.cursor.execute("insert into warn1(theme,log,warndate) values ('%s','%s','%s')" % (main_text, text,warn_time))
+        cursor.execute("insert into warn1(theme,log,warndate) values ('%s','%s','%s')" % (main_text, text,warn_time))
         print("增加一条提醒，成功 ")
-        # self.todo_id += 1
-        # self.cursor.close()
-        # self.conn.commit()
-        # self.conn.close()
+        # todo_id += 1
+        cursor.close()
+        conn.commit()
+        conn.close()
 
     def findAll(self):
-        self.cursor.execute("select * from warn1")
+        conn = sqlite3.connect('todolist.db')
+        cursor = conn.cursor()
+        cursor.execute("select * from warn1 order by id desc")
         print('查找全部提醒数据：')
-        rs = self.cursor.fetchall()
+        rs = cursor.fetchall()
 
         if not rs:
             print('当前没有提醒记录，请添加')
         else:
             print(rs)
             return([{'id': c[0], 'theme': c[1], 'log': c[2], 'localtime': c[3], 'warntime': c[4]} for c in rs])
-        self.cursor.close()
-        self.conn.commit()
-        self.conn.close()
+        cursor.close()
+        conn.commit()
+        conn.close()
 
     def findOne(self, index):
-        self.cursor.execute("select * from warn1 where id=%d" % index)
+        conn = sqlite3.connect('todolist.db')
+        cursor = conn.cursor()
+        cursor.execute("select * from warn1 where id=%d" % index)
         print('查找id= %s的提醒数据' % index)
-        rs = self.cursor.fetchall()
+        rs = cursor.fetchall()
         print(rs)
-        self.cursor.close()
-        self.conn.commit()
-        self.conn.close()
+        cursor.close()
+        conn.commit()
+        conn.close()
         return  rs
 
     def update(self, str, index):
-        self.cursor.execute("update warn1 set log='%s' where id=%d " % (str, index))
+        conn = sqlite3.connect('todolist.db')
+        cursor = conn.cursor()
+        cursor.execute("update warn1 set log='%s' where id=%d " % (str, index))
         print('通过id更新数据')
-        self.cursor.close()
-        self.conn.commit()
-        self.conn.close()
+        cursor.close()
+        conn.commit()
+        conn.close()
 
     def delete_todo(self, index):
-        self.cursor.execute("delete from warn1 where id=%d" % index)
+        conn = sqlite3.connect('todolist.db')
+        cursor = conn.cursor()
+        cursor.execute("delete from warn1 where id=%d" % index)
         print('删除id=%s的提醒成功' % index)
-        self.cursor.close()
-        self.conn.commit()
-        self.conn.close()
+        cursor.close()
+        conn.commit()
+        conn.close()
 
     def create_one(self, main_text, text, warn_time):
-        self.cursor.execute("select count(*) from warn1")
-        rs = self.cursor.fetchall()
+        conn = sqlite3.connect('todolist.db')
+        cursor = conn.cursor()
+        cursor.execute("select count(*) from warn1")
+        rs = cursor.fetchall()
         res_index = rs[0][0]
         # print(rs)
         # print(res_index)
         print("增加一条提醒，成功 ")
 
-        self.cursor.execute(
+        cursor.execute(
             "insert into warn1(id,theme,log) values ('%d','%s','%s')" % (res_index, main_text, text))
 
-        self.cursor.execute("select datetime('now','localtime','+%d seconds')" % (warn_time))
+        cursor.execute("select datetime('now','localtime','+%d seconds')" % (warn_time))
 
-        r = self.cursor.fetchall()
+        r = cursor.fetchall()
         warntime = r[0][0]
         print(warntime)
-        self.cursor.execute(
+        cursor.execute(
             "update warn1 set warndate='%s' where id=%d " % (warntime, res_index))
 
         print(type(warntime))
@@ -92,12 +104,12 @@ class tododb(object):
                 break
 
         # self.cursor.execute("select * from warn1 where id=%d" % 1)
-        self.cursor.execute("select * from warn1 ")
-        r = self.cursor.fetchall()
+        cursor.execute("select * from warn1 ")
+        r = cursor.fetchall()
         print(r)
-        self.cursor.close()
-        self.conn.commit()
-        self.conn.close()
+        cursor.close()
+        conn.commit()
+        conn.close()
 
 
 # if __name__ == "__main__":
