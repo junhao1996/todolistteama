@@ -26,46 +26,97 @@ def login():
 @app.route('/showall/<name>')
 def showall(name=None):
     todo = todolistteamA()
-    result= todo.read_all()
+    result = todo.read_all()
+
+    return render_template('showall.html', list_todo=result)
 
 
+@app.route('/delete/', methods=['POST', 'GET'])
+def delete():
+    if request.method == 'POST':
+        a = request.form
+        if a:
+            print('aaa')
+            b = request.form['warn']
+            print(b)
+            print(type(b))
+            todo = todolistteamA()
+            todo.delete(int(b))
+            result = todo.read_all()
+    return render_template('delete.html', list_todo=result)
 
-    return render_template('showall.html', list_todo = result)
 
-
-
-@app.route('/redir')
-def redir():
-    return redirect('https://www.baidu.com')
+@app.route('/show/')
+def show():
+    todo = todolistteamA()
+    result = todo.read_maxone()
+    print(result)
+    return render_template('showlastone.html', res=result)
 
 
 @app.route('/add/', methods=['POST', 'GET'])
 def add():
-    # if request.method == 'POST':
-    #     a = request.form['content']
-    #     print(a)
-    #
-    #
-    # else:
-    #     print('errot++++++++++++++++++++++++')
-
-    error = None
-
-    a = request.form
-    print(a)
-    if a:
-        b = request.form['content']
-        print(b)
-        c = request.form['warndate']
-        print(c)
-        todo = todolistteamA()
-        todo.add1('dsd', b, c)
-        # todo.read_all()
-        result = todo.read_maxone()
-    print('*'*30)
-    return render_template('add.html',addtodo = result)
+    if request.method == 'POST':
+        print('post_______________________')
+        a = request.form
+        if a:
+            b = request.form['content']
+            print(b)
+            c = request.form['warndate']
+            print(c)
+            todo = todolistteamA()
+            todo.add1('dsd', b, c)
+            # todo.read_all()
+            result = todo.read_maxone()
+            # return redirect('show')
+        print('*' * 30)
+        # ,addtodo = result
+        return render_template('add.html')
+    else:
+        a = request.form
+        if a:
+            b = request.form['content']
+            print(b)
+            c = request.form['warndate']
+            print(c)
+            todo = todolistteamA()
+            todo.add1('dsd', b, c)
+            # todo.read_all()
+            result = todo.read_maxone()
+            # return redirect('show')
+        print('*' * 30)
+        # ,addtodo = result
+        return render_template('add.html')
 
 
 if __name__ == '__main__':
     app.run(debug=True)
 #     saaaaaaaaaaaaaaaaaaaaaa
+
+# @app.route('/add/', methods=['POST', 'GET'])
+# def add():
+#     if request.method == 'POST':
+#         a = request.form['content']
+#         print(a)
+#         print('errot++++++++++++++++++++++++')
+#     #
+#     #
+#     # else:
+#     #     print('errot++++++++++++++++++++++++')
+#
+#     error = None
+#
+#     a = request.form
+#     print(a)
+#     if a:
+#         b = request.form['content']
+#         print(b)
+#         c = request.form['warndate']
+#         print(c)
+#         todo = todolistteamA()
+#         todo.add1('dsd', b, c)
+#         # todo.read_all()
+#         result = todo.read_maxone()
+#     print('*'*30)
+#     # ,addtodo = result
+#     return render_template('add.html')

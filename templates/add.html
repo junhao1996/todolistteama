@@ -5,15 +5,19 @@
     <title>Title</title>
 </head>
 <body>
+<center>
+
 <form action="/add/" method="post">
 <h1>增加一条提醒</h1><br>
-提醒内容    <input type="text" name="content"value="tixing"><br>
+提醒内容    <input type="text" name="content"><br>
 提醒时间    <input type="text" name="warndate" ><br>
             <input type="submit" name="a" value="提交">
 </form>
+<a href="{{url_for('show')}}">显示当前提交记录</a><br>
+    <a href="{{url_for('showall')}}">显示所有记录</a>
 
 
-
+    </center>
 <!--<h1> {{ todo }}</h1>-->
 
 <!--<form action="/add/" method="POST" >-->

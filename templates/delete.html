@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/delete/" method="post">
+<h1>删除一条提醒</h1><br>
+    {% for  todo in list_todo %}
+   {{ todo }} <input type="radio" value="1" name="warn"><br>
+    {% endfor %}
+
+提醒内容    <input type="radio" value="1" name="warn"><br>
+提醒时间    <input type="radio" value="2" name="warn"><br>
+            <input type="submit" name="a" value="提交">
+</form>
+<a href="{{url_for('showall')}}">显示所有记录</a>
+
+</body>
+</html>
