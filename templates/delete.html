@@ -3,19 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        .box{margin:20px auto;width:380px;height:auto;}
+        h1{text-align:center;color:red;}
+        .conter{width:380px;height:30px;}
+        .conter .left{float:left;}
+        .conter .right{float:right;}
+        .sub{margin:20px auto 0;}
+    </style>
 </head>
 <body>
-<form action="/delete/" method="post">
-<h1>删除一条提醒</h1><br>
-    {% for  todo in list_todo %}
-   {{ todo }} <input type="radio" value="1" name="warn"><br>
+<div class="box">
+    <form action="/delete/" method="post">
+    <h1>删除一条提醒</h1><br>
+        <!--{% for  todo in list_todo %}-->
+
+       <!--{{ todo }} <input type="radio" value="1" name="warn"><br>-->
+        <!--{% endfor %}-->
+        {% for  i in list_id %}
+        {{i[0],i[1]}}<input type="radio" value={{i[0]}} name="warn"><br>
     {% endfor %}
 
-提醒内容    <input type="radio" value="1" name="warn"><br>
-提醒时间    <input type="radio" value="2" name="warn"><br>
-            <input type="submit" name="a" value="提交">
-</form>
-<a href="{{url_for('showall')}}">显示所有记录</a>
+        <div class="conter">
+            <div class="left">通过id删除数据   <input type="radio" value="100" name="warn"></div>
+            <div class="right">通过时间删除数据    <input type="radio" value="100" name="warn"></div>
+        </div>
 
+        <input class="sub" type="submit" name="a" value="提交">
+    </form>
+    <a href="{{url_for('showall')}}" style="float:right;margin-top:-30px;">显示所有记录</a>
+</div>
 </body>
 </html>

@@ -19,7 +19,7 @@ class tododb(object):
         cursor.execute("select count(1) from warn")
         rs = cursor.fetchall()
         res_index = rs[0][0]
-        cursor.execute("insert into warn1(theme,log,warndate) values ('%s','%s','%s')" % (main_text, text,warn_time))
+        cursor.execute("insert into warn1(theme,log,warndate) values ('%s','%s','%s')" % (main_text, text, warn_time))
         print("增加一条提醒，成功 ")
         # todo_id += 1
         cursor.close()
@@ -37,10 +37,11 @@ class tododb(object):
             print('当前没有提醒记录，请添加')
         else:
             print(rs)
-            return([{'id': c[0], 'theme': c[1], 'log': c[2], 'localtime': c[3], 'warntime': c[4]} for c in rs])
+            return ([{'id': c[0], 'theme': c[1], 'log': c[2], 'localtime': c[3], 'warntime': c[4]} for c in rs])
         cursor.close()
         conn.commit()
         conn.close()
+
     def find_maxone(self):
         conn = sqlite3.connect('todolist.db')
         cursor = conn.cursor()
@@ -52,7 +53,7 @@ class tododb(object):
             print('当前没有提醒记录，请添加')
         else:
             print(rs)
-            return([{'id': c[0], 'theme': c[1], 'log': c[2], 'localtime': c[3], 'warntime': c[4]} for c in rs])
+            return ([{'id': c[0], 'theme': c[1], 'log': c[2], 'localtime': c[3], 'warntime': c[4]} for c in rs])
         cursor.close()
         conn.commit()
         conn.close()
@@ -67,12 +68,24 @@ class tododb(object):
         cursor.close()
         conn.commit()
         conn.close()
-        return  rs
+        return rs
 
-    def update(self, str, index):
+    def find_id(self):
         conn = sqlite3.connect('todolist.db')
         cursor = conn.cursor()
-        cursor.execute("update warn1 set log='%s' where id=%d " % (str, index))
+        cursor.execute("select id desc ,log from warn1 ")
+        print('查找id数据')
+        rs = cursor.fetchall()
+        # print(rs)
+        cursor.close()
+        conn.commit()
+        conn.close()
+        return rs
+
+    def update(self, str1, index):
+        conn = sqlite3.connect('todolist.db')
+        cursor = conn.cursor()
+        cursor.execute("update warn1 set log='%s' where id=%d " % (str1, index))
         print('通过id更新数据')
         cursor.close()
         conn.commit()
@@ -83,6 +96,18 @@ class tododb(object):
         cursor = conn.cursor()
         cursor.execute("delete from warn1 where id=%d" % index)
         print('删除id=%s的提醒成功' % index)
+        cursor.close()
+        conn.commit()
+        conn.close()
+    def kongque_id(self):
+        conn = sqlite3.connect('todolist.db')
+        cursor = conn.cursor()
+        cursor.execute("select id from warn1")
+        rs = cursor.fetchall()
+        print(rs)
+        cursor.execute("select min(id+1)from warn1 as a where not exists (select id from warn1 where id=a.id+1)")
+        rs = cursor.fetchall()
+        print(rs)
         cursor.close()
         conn.commit()
         conn.close()
@@ -125,9 +150,9 @@ class tododb(object):
         conn.commit()
         conn.close()
 
-
-# if __name__ == "__main__":
-#     todo = tododb()
+if __name__ == "__main__":
+    todo = tododb()
+    todo.kongque_id()
 #     # todo.add('asa1111')
 #     # todo.update('dsdsds',211)
 #     # todo.delete_todo(5)

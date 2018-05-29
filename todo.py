@@ -16,6 +16,8 @@ class todolistteamA(object):
 
     def read_all(self):
         return self.db.find_all()
+    def read_id(self):
+        return self.db.find_id()
 
     def read_maxone(self):
         return self.db.find_maxone()

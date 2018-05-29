@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>update</title>
+</head>
+<body>
+<center>
+
+<form action="/update/" method="post">
+<h1 style="color:red;">修改一条提醒</h1><br>
+        id  &emsp;&emsp;&emsp;&emsp;
+    <input type="text" name="content"><br>
+更改提醒内容    <input type="text" name="warndate" ><br>
+            <input type="submit" name="a" value="提交">
+</form>
+<a href="{{url_for('show')}}">显示当前提交记录</a><br>
+    <a href="{{url_for('showall')}}">显示所有记录</a>
+
+
+    </center>
+
+</body>
+</html>

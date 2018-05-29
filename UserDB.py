@@ -29,7 +29,7 @@ class User_db(object):
         self.conn.commit()
         self.conn.close()
 
-    def findAll(self):
+    def find_all(self):
         self.cursor.execute("select * from user")
         rs = self.cursor.fetchall()
         print(rs)
@@ -37,7 +37,7 @@ class User_db(object):
         self.conn.commit()
         self.conn.close()
 
-    def findOne(self, index):
+    def find_one(self, index):
         self.cursor.execute("select * from user where id=%d" % (index))
         rs = self.cursor.fetchall()
         print(rs)
@@ -53,10 +53,14 @@ class User_db(object):
 
     def delete_todo(self, index):
         self.cursor.execute("delete from user where id=%d" % index)
+        self.cursor.close()
+        self.conn.commit()
+        self.conn.close()
+
 
 
 if __name__ == "__main__":
     user = User_db()
     # user.add('asa')
     # user.findAll()
-    user.findOne(2)
+    user.find_one(2)

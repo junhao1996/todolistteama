@@ -33,8 +33,11 @@ def showall(name=None):
 
 @app.route('/delete/', methods=['POST', 'GET'])
 def delete():
+    result = " "
+    res_id = []
     if request.method == 'POST':
         a = request.form
+
         if a:
             print('aaa')
             b = request.form['warn']
@@ -43,10 +46,15 @@ def delete():
             todo = todolistteamA()
             todo.delete(int(b))
             result = todo.read_all()
-    return render_template('delete.html', list_todo=result)
+            res_id = todo.read_id()
+            # print(res_id)
+            # for  i in res_id:
+            #     print(i[0])
+            # print(type(res_id))
+    return render_template('delete.html', list_todo=result,list_id = res_id)
 
 
-@app.route('/show/')
+@app.route('/show/',methods=['POST', 'GET'])
 def show():
     todo = todolistteamA()
     result = todo.read_maxone()
@@ -87,6 +95,29 @@ def add():
         print('*' * 30)
         # ,addtodo = result
         return render_template('add.html')
+@app.route('/update/', methods=['POST', 'GET'])
+def update():
+    if request.method == 'POST':
+        print('*******************1111111111**********')
+        a = request.form
+        if a:
+            print('**************12121212***************')
+            update_id = int(request.form['content'])
+            text = request.form['warndate']
+            todo = todolistteamA()
+            todo.update(text,update_id)
+        return render_template('update.html')
+    else:
+        print('*******************22222**********')
+        a = request.form
+        if a:
+            print('*************33333333****************')
+            update_id = int(request.form['content'])
+            text = request.form['warndate']
+            todo = todolistteamA()
+            todo.update(text,update_id)
+        return render_template('update.html')
+
 
 
 if __name__ == '__main__':
